@@ -104,8 +104,11 @@
                     <!-- Featured blog post-->
                     <h1>Yolo</h1>
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="../static/img/head-protection.png" alt="..." /></a>
-                        <div class="card-body">
+                        {% if request.url == "http://localhost:5000/yolo" %}
+                            <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
+                        {% else %}
+                            <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
+                        {% endif %}
                             <div class="small text-muted">January 1, 2022</div>
                             <h2 class="card-title">Featured Post Title</h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
@@ -135,7 +138,13 @@
                     <!-- Featured blog post-->
                     <h1>Mask R-CNN</h1>
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="../static/img/star.png" alt="..." /></a>
+                        {% if request.url == "http://localhost:5000/yolo" %}
+                            <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
+                        {% else %}
+                            <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
+                        {% endif %}
+                        
+                        
                         <div class="card-body">
                             <div class="small text-muted">January 1, 2022</div>
                             <h2 class="card-title">Featured Post Title</h2>
@@ -240,11 +249,12 @@
                     
                     <div class="card mb-4">
                         <div class="img-list">
-                            <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (1).jpg" class="anima"></button>
-                            <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (2).jpg" class="anima"></button>
-                            <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (3).jpg" class="anima"></button>
+                            {% for imagelist in imagelist %}
+                                <button class="button-border"><img src="{{url_for('static', filename = imagelist)}}" class="anima" onclick="location.href='yolo'"></button>
+                            {% endfor %}
+                            <!-- <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (3).jpg" class="anima"></button> -->
                         </div>
-                        <div class="img-list">
+                        <!-- <div class="img-list">
                             <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (4).jpg" class="anima"></button>
                             <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (5).jpg" class="anima"></button>
                             <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (6).jpg" class="anima"></button>
@@ -253,7 +263,7 @@
                             <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (7).jpg" class="anima"></button>
                             <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (8).jpg" class="anima"></button>
                             <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (9).jpg" class="anima"></button>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>
