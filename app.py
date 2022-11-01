@@ -5,9 +5,9 @@ app.secret_key = '1234'
 import os
 
 # 파일업로드 출력 테스트
-from flaskext.mysql import MySQL
+# from flaskext.mysql import MySQL
 import os
-mysql = MySQL()
+# mysql = MySQL()
 ###여기까지
 
 
@@ -73,11 +73,30 @@ def upload_file() :
 @app.route('/uploader', methods=['GET', 'POST'])
 def uploader_file() :
     # file_name = [] # 파일이름 리스트 생성
-    f = request.files['file']
-    f.save('./static/img/upload_files/' + secure_filename(f.filename))
-    flash("업로드가 완료되었습니다.")
+    global file # 전역변수로 호출
+    f = request.files.getlist('file[]')
+    for file in f :
+        file.save('./static/upload_files/' + secure_filename(file.filename))
+    flash("업로드가 완료되었습니다.") 
+    IMG_LIST = os.listdir('static/upload_files') # 폴더 속 파일리스트
+    IMG_LIST = ['upload_files/' + i for i in IMG_LIST]
     # file_name.append(f.filename) # 파일이름 리스트 추가
-    return render_template('solution.html', file_name = f.filename)
+    # IMG_LIST = os.listdir('static/upload_files') # 폴더 속 파일리스트
+    # IMG_LIST = ['upload_files/' + i for i in IMG_LIST]
+    return render_template('solution.html', file_name = file.filename, imagelist = IMG_LIST)
+    # return redirect(url_for('solution'), file_name = file.filename, imagelist = IMG_LIST)
+
+
+# 클릭한 사진 뽑아내기
+@app.route('/yolo', methods=['GET', 'POST'])
+def yolo() :
+    global file
+    # click_file = request.file('file')
+    IMG_LIST = os.listdir('static/upload_files') # 폴더 속 파일리스트
+    IMG_LIST = ['upload_files/' + i for i in IMG_LIST]
+    return render_template('solution.html', file_name = file.filename, imagelist = IMG_LIST)
+
+
 
 # 파일 업로드 출력 테스트
 # @app.route('/fileUpload', methods = ['GET', 'POST'])
