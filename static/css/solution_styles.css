@@ -488,6 +488,7 @@ progress {
 }
 
 .lead {
+  font-family:"Yeon Sung";
   font-size: 1.25rem;
   font-weight: 300;
 }
@@ -11391,5 +11392,5 @@ img.anima:hover {
 
 .py-5-solution {
   padding-top: 6rem !important;
-  padding-bottom: 1rem !important;
+  /* padding-bottom: 1rem !important; */
 }
