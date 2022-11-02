@@ -9,9 +9,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+    <script>
+        // 클릭시 이미지 변경
+        function change_image(e){
+            var img = document.getElementById("yolo");
+            img.src = e.src
+            var img = document.getElementById("mask r-cnn");
+            img.src = e.src
+        } 
+    </script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
+        <meta name="dgescription" content="" />
         <meta name="author" content="" />
         <title>Safe Or Out - Solution</title>
         <!-- Favicon-->
@@ -43,17 +52,17 @@
         </nav> -->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="/index">Safe Or Out</a>
+                <a class="navbar-brand" href="/">Safe Or Out</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index">Main</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index#portfolio">Profile</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index#about">About</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index#contact">Model</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/">Main</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">Profile</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about">About</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#contact">Model</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/solution">Solution</a></li>
                     </ul>
                 </div>
@@ -104,16 +113,17 @@
                     <!-- Featured blog post-->
                     <h1>Yolo</h1>
                     <div class="card mb-4">
-                        {% if request.url == "http://localhost:5000/yolo" %}
+                        <!-- {% if request.url == "http://localhost:5000/yolo" %}
                             <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
                         {% else %}
                             <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
-                        {% endif %}
+                        {% endif %} -->
+                        <a href="#!"><img id="yolo" class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted">January 1, 2022</div>
                             <h2 class="card-title">Featured Post Title</h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
+                            <a class="btn btn-primary" href="/#contact">Read more →</a>
                         </div>
                     </div>
                     
@@ -139,16 +149,17 @@
                     <!-- Featured blog post-->
                     <h1>Mask R-CNN</h1>
                     <div class="card mb-4">
-                        {% if request.url == "http://localhost:5000/yolo" %}
+                        <!-- {% if request.url == "http://localhost:5000/yolo" %}
                             <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
                         {% else %}
                             <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
-                        {% endif %}
+                        {% endif %} -->
+                        <a href="#!"><img id="mask r-cnn" class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted">January 1, 2022</div>
                             <h2 class="card-title">Featured Post Title</h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
+                            <a class="btn btn-primary" href="/#contact">Read more →</a>
                         </div>
                     </div>
                     
@@ -249,7 +260,7 @@
                     <div class="card mb-4">
                         <div class="img-list">
                             {% for imagelist in imagelist %}
-                                <button class="button-border"><img src="{{url_for('static', filename = imagelist)}}" class="anima" onclick="location.href='yolo'"></button>
+                                <button class="button-border"><img src="{{url_for('static', filename = imagelist)}}" class="anima" onclick="change_image(this)"></button>
                             {% endfor %}
                             <!-- <button class="button-border"><img src="static/img/fire_extinguisher/fire extinguisher (3).jpg" class="anima"></button> -->
                         </div>
