@@ -79,7 +79,7 @@
                     <h1>Yolo</h1>
                     <div class="card mb-4">
                         {% if request.url == "http://localhost:5000/yolo" %}
-                            <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
+                            <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..."/></a>
                         {% else %}
                             <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
                         {% endif %}
