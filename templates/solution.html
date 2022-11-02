@@ -9,9 +9,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+    <script>
+        // 클릭시 이미지 변경
+        function change_image(e){
+            var img = document.getElementById("yolo");
+            img.src = e.src
+            var img = document.getElementById("mask r-cnn");
+            img.src = e.src
+        } 
+    </script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
+        <meta name="dgescription" content="" />
         <meta name="author" content="" />
         <title>Safe Or Out - Solution</title>
         <!-- Favicon-->
@@ -26,19 +35,21 @@
         <span style="font-family: 'Yeon Sung', !important;"></span>
     </head>
     <body>
+
+
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="/index">Safe Or Out</a>
+                <a class="navbar-brand" href="/">Safe Or Out</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index">Main</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index#portfolio">Profile</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index#about">About</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index#contact">Model</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/">Main</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">Profile</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about">About</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#contact">Model</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/solution">Solution</a></li>
                     </ul>
                 </div>
@@ -48,6 +59,7 @@
         <header class="py-5-solution bg-light border-bottom mb-4">  <!-- bg-light -->
             <div class="container">
                 <div class="text-center my-5 mb-4">
+                    <!-- <h1 class="lead fw-bolder" style="font-size:70px; color:white;">Welcome to <span style="color:yellow">SAFE OR OUT</span> Solution!</h1> -->
                     <p class="lead mb-0" style="font-size:40px;">이미지 속 세상은 안전한가</p>
                     <p class="lead mb-0" style="font-size:70px; font-weight:1000;">SAFE? <span style="font-size:40px;">or</span> OUT?</p>
                     <!-- <p class="lead mb-0" style="font-size:30px;"><br>Yolo, Mask R-CNN 두 가지 모델을 기반으로 원본 이미지 속 안전장치들을 탐지해주는</p>
@@ -57,12 +69,15 @@
             </div>
         </header>
 
+
+
         <!-- Page content-->
         <div class="container">
             <div class="row">
                 <!-- upload widget-->
                 
                 <h2 class="lead" style="display: flex; justify-content: center; font-size:40px">사진을 선택해주세요 :)</h2>
+                <!-- <h2 class="lead" style="display: flex; justify-content: center; font-size:40px">picture plz :)</h2> -->
                 
                 <div class="card-body">
                     <div class="input-group" style="display: flex; justify-content: center; padding-bottom:30px;">
@@ -78,16 +93,17 @@
                     <!-- Featured blog post-->
                     <h1>Yolo</h1>
                     <div class="card mb-4">
-                        {% if request.url == "http://localhost:5000/yolo" %}
-                            <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..."/></a>
+                        <!-- {% if request.url == "http://localhost:5000/yolo" %}
+                            <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
                         {% else %}
                             <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
-                        {% endif %}
+                        {% endif %} -->
+                        <a href="#!"><img id="yolo" class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted">January 1, 2022</div>
                             <h2 class="card-title">Featured Post Title</h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="http://localhost:5000/index#contact">Yolo? →</a>
+                            <a class="btn btn-primary" href="/#contact">Yolo →</a>
                         </div>
                     </div>
 
@@ -95,16 +111,17 @@
                     <!-- Featured blog post-->
                     <h1>Mask R-CNN</h1>
                     <div class="card mb-4">
-                        {% if request.url == "http://localhost:5000/yolo" %}
+                        <!-- {% if request.url == "http://localhost:5000/yolo" %}
                             <a href="#!"><img class="card-img-top" src="{{url_for('static', filename = imagelist[1])}}" alt="..." /></a>
                         {% else %}
                             <a href="#!"><img class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>  
-                        {% endif %}
+                        {% endif %} -->
+                        <a href="#!"><img id="mask r-cnn" class="card-img-top" src="static/img/loading_sushi.gif" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted">January 1, 2022</div>
                             <h2 class="card-title">Featured Post Title</h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="http://localhost:5000/index#contact">Mask R-CNN? →</a>
+                            <a class="btn btn-primary" href="/#contact">Mask R-CNN →</a>
                         </div>
                     </div>
                 </div>
@@ -114,6 +131,7 @@
 
 
                 <!-- Side widgets-->
+
                 <div class="col-lg-4 lead">
                     <div class="card mb-4 bg-light">
                         <h3 style="text-align:center">Image</h3>
@@ -123,7 +141,7 @@
                     <div class="card mb-4">
                         <div class="img-list">
                             {% for imagelist in imagelist %}
-                                <button class="button-border"><img src="{{url_for('static', filename = imagelist)}}" class="anima" onclick="location.href='yolo'"></button>
+                                <button class="button-border"><img src="{{url_for('static', filename = imagelist)}}" class="anima" onclick="change_image(this)"></button>
                             {% endfor %}
                         </div>
                     </div>
@@ -140,5 +158,10 @@
         <div class="copyright py-4 text-center text-white">
             <div class="container"><small>Copyright &copy; Your Website 2022</small></div>
         </div>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
     </body>
 </html>
