@@ -14,174 +14,115 @@
 /* Inline XML data URI fix */
 /* Some browsers (most browsers) don't render inline XML data URI's unless they are escaped. */
 
-var camera, renderer, scene, particleSystem, baseParticle, mouse;
-window.onload = function () {
-  mouse = [window.innerWidth / 2, window.innerHeight / 2];
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-  camera.position.z = 50;
-  scene.background = new THREE.Color(0x333344);
-  canvas = document.querySelector('#b canvas');
+$(document).ready(function(){
+    
+  $(document).mousemove(function(e){
+      var mouseX = e.pageX;
+      var mouseY = e.pageY;
 
-  baseParticle = new THREE.PlaneGeometry(1, 1, 1);
-  baseParticle.applyMatrix(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(0, 0, Math.PI / 4)));
-  for (var i = 0; i < baseParticle.vertices.length; i++) {
-    if (Math.round(baseParticle.vertices[i].y) != 0) {
-      baseParticle.vertices[i].x = 0;
-      baseParticle.vertices[i].z = 0;
+      $('.cursor').css({
+          left: mouseX + "px",
+          top : mouseY + "px"
+      })
+  })
+})
+
+
+class Particle{
+  constructor(id, opt) {
+    this.box = document.getElementById(id);
+    this.number = opt.number || 100;
+    this.colors = this.handleArrayParams(opt.colors) || ['#400606', '#c7b4aa', '#ffffff'];
+    this.width = opt.width || 15;
+    this.height = opt.height || 7; 
+    this.duration = opt.duration || 6000;
+    this.delay = opt.delay || 6000;
+  }
+  handleArrayParams(arr) {
+    return Array.isArray(arr) && arr.length > 0 && arr.every(el => el[0]==='#') ? arr : false;
+  }
+  getRandom(max, min = 0) {
+    min = Math.ceil(min);
+    max = Math.floor(max+1);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+  getRange(num, range = 0.5){
+    const symbol = Math.random() > 0.5 ? +1 : -1;
+    return num + this.getRandom(Math.floor(num * range)) * symbol;
+  }
+  start() {
+    for(let i = 0; i < this.number; i++){
+      const temp = document.createElement('span');
+      temp.style.cssText += `
+        position: absolute;
+        transform-style: preserve-3d;
+        animation-timing-function: cubic-bezier(${this.getRandom(3)*0.1}, 0, 1, 1);
+        animation-iteration-count: infinite;
+        width: ${this.getRange(this.width, 0.7)}px;
+        height: ${this.getRange(this.height, 0.7)}px;
+        top: -${this.width * 2}px;
+        left: calc(${this.getRandom(100)}% - ${this.width*0.5}px);
+        background-color: ${this.colors[this.getRandom(this.colors.length-1)]};
+        animation-name: fallen_${this.getRandom(5, 1)};
+        animation-duration: ${this.getRange(this.duration)}ms;
+        animation-delay: ${this.getRange(this.delay)}ms;
+       `;
+      this.box.append(temp);
     }
   }
-  baseParticle.mergeVertices();
-  baseParticle.verticesNeedUpdate = true;
-  baseParticle = new THREE.Mesh(baseParticle, new THREE.MeshBasicMaterial({ color: 0xffffff, emissive: 0x555555 }));
-  particleSystem = new ParticleSystem(99);
-
-  render();
-};
-
-window.onresize = function () {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-};
-
-window.onmousemove = function (e) {
-  mouse = [e.clientX, e.clientY];
-};
-
-function randomFloat(a, b) {
-  var r = Math.random() * (b - a) + a;
-  return r;
 }
 
-function partToHex(part) {
-  var h = part.toString(16);
-  return h.length == 1 ? "0" + h : h;
-}
-
-console.log(partToHex(255));
-
-var color;
-function FireParticle() {
-  this.direction;
-  this.scaleSpeed;
-  this.curAge;
-
-  this.parent;
-
-  this.obj;
-  this.colorRamp = [[255, 255, 0], [255, 136, 34], [255, 17, 68], [153, 136, 136]];
-
-  this.update = function () {
-    if (Math.abs(this.parent.pos.x - this.obj.position.x) > 10 || Math.abs(-this.parent.pos.y - this.obj.position.y) > 10) {
-      this.obj.scale.x *= .8;
-      this.obj.scale.y *= .8;
-      this.obj.scale.z *= .8;
-    }
-
-    var point = this.curAge / 40;
-    var pointRem = point % 1;
-
-    if (Math.round(point) >= this.colorRamp.length - 1) {
-      color = this.colorRamp[this.colorRamp.length - 1];
-    } else {
-      color = [Math.floor(this.colorRamp[Math.floor(point)][0] * (1 - pointRem) + this.colorRamp[Math.floor(point) + 1][0] * pointRem), Math.floor(this.colorRamp[Math.floor(point)][1] * (1 - pointRem) + this.colorRamp[Math.floor(point) + 1][1] * pointRem), Math.floor(this.colorRamp[Math.floor(point)][2] * (1 - pointRem) + this.colorRamp[Math.floor(point) + 1][2] * pointRem)];
-    }
-
-    color = partToHex(color[0]) + partToHex(color[1]) + partToHex(color[2]);
-    color = parseInt(color, 16);
-
-    this.obj.material.color.setHex(color);
-
-    this.curAge++;
-
-    if (this.obj.scale.x < .01) {
-      this.init();
-    }
-
-    this.obj.position.x += this.direction.x;
-    this.obj.position.y += this.direction.y;
-    this.obj.position.z += this.direction.z;
-
-    this.obj.scale.x *= this.scaleSpeed;
-    this.obj.scale.y *= this.scaleSpeed;
-    this.obj.scale.z *= this.scaleSpeed;
-  };
-
-  this.init = function () {
-    this.direction = new THREE.Vector3(randomFloat(-.01, .01), randomFloat(.01, .1), randomFloat(-.01, .01));
-    this.scaleSpeed = randomFloat(.8, .99);
-    this.curAge = 0;
-
-    if (this.obj != undefined) {
-      scene.remove(this.obj);
-    }
-
-    this.obj = baseParticle.clone();
-    this.obj.position.set(this.parent.obj.position.x + randomFloat(-.2, .2), this.parent.obj.position.y, this.parent.obj.position.z + randomFloat(-.2, .2));
-    this.obj.scale.set(1, 2, 1);
-    this.obj.material = this.obj.material.clone();
-    // var size = randomFloat(.5, 1);
-    // this.obj.scale.set(size, 2*size, size);
-
-    for (var i = 0; i < randomFloat(0, 100); i++) {
-      this.update();
-    }
-
-    scene.add(this.obj);
-  };
+const party = new Particle('particle', { number: 200, colors: ['#ffca76', '#ffb9b9', '#fff180'] });
+party.start();
 
 
+// Created for an Articles on:
+// https://www.html5andbeyond.com/bubbling-text-effect-no-canvas-required/
+
+jQuery(document).ready(function ($) {
+  // Define a blank array for the effect positions. This will be populated based on width of the title.
+  var bArray = [];
+  // Define a size array, this will be used to vary bubble sizes
+  var sArray = [4, 6, 8, 10];
+
+  // Push the header width values to bArray
+  for (var i = 0; i < $(".bubbles").width(); i++) {
+    bArray.push(i);
+  }
+
+  // Function to select random array element
+  // Used within the setInterval a few times
+  function randomValue(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  // setInterval function used to create new bubble every 350 milliseconds
+  setInterval(function () {
+    // Get a random size, defined as variable so it can be used for both width and height
+    var size = randomValue(sArray);
+    // New bubble appeneded to div with it's size and left position being set inline
+    // Left value is set through getting a random value from bArray
+    $(".bubbles").append(
+    '<div class="individual-bubble" style="left: ' +
+    randomValue(bArray) +
+    "px; width: " +
+    size +
+    "px; height:" +
+    size +
+    'px;"></div>');
 
 
-}
+    // Animate each bubble to the top (bottom 100%) and reduce opacity as it moves
+    // Callback function used to remove finsihed animations from the page
+    $(".individual-bubble").animate(
+    {
+      bottom: "100%",
+      opacity: "-=0.7" },
 
-function ParticleSystem(size) {
-  this.particles = [];
-  this.obj = new THREE.Group();
+    3000,
+    function () {
+      $(this).remove();
+    });
 
-  this.p = new THREE.Vector3();
-  this.d;
-  this.dis;
-  this.pos = new THREE.Vector3(0, 0, 0);
-
-  this.init = function () {
-    for (var i = 0; i < size; i++) {
-      this.particles.push(new FireParticle());
-      this.particles[i].parent = this;
-      this.particles[i].init();
-    }
-
-    scene.add(this.obj);
-  };
-  this.init();
-
-  this.update = function () {
-    this.p.set(mouse[0] / window.innerWidth * 2 - 1, mouse[1] / window.innerHeight * 2 - 1, .5);
-    this.p.unproject(camera);
-    this.d = this.p.sub(camera.position).normalize();
-    this.dis = -camera.position.z / this.d.z;
-    this.pos = camera.position.clone().add(this.d.multiplyScalar(this.dis));
-
-    this.obj.position.x = this.pos.x;
-    this.obj.position.y = -this.pos.y;
-
-    for (var i = 0; i < this.particles.length; i++) {
-      this.particles[i].update();
-    }
-
-    this.obj.rotation.y += .03;
-  };
-}
-
-function render() {
-  requestAnimationFrame(render);
-  renderer.render(scene, camera);
-  particleSystem.update();
-}
-
-
-
+  }, 350);
+});
