@@ -4,40 +4,16 @@ app = Flask(__name__)
 app.secret_key = '1234'
 import os
 
-# 파일업로드 출력 테스트
-# from flaskext.mysql import MySQL
-import os
-# mysql = MySQL()
-###여기까지
-
-
 @app.route('/')
-def index() :
-    return render_template('index.html')
+def home():
+    return render_template("index.html")
 
-@app.route('/method',methods = ['GET','POST']) 
-def method():
-    if request.method == 'GET' :
-        return 'GET으로 전달'
-    else :
-        return 'POST로 전달'
-
-
-# 새 창 열기 = html 열기
-
-
-@app.route('/daum')
-def daum() :
-    return redirect('https://www.daum.net/')  # html없이 사이트 열기
-
-@app.route('/urltest')
-def url_test():
-    return redirect(url_for('daum'))
-
-@app.errorhandler(404)  # error 메시지 
-def page_not_found(error):
-    return "페이지가 없습니다. URL를 확인 하세요", 404
-
+@app.route('/method', methods=['GET','POST'])
+def method() :
+    if request.method == 'GET':
+        return "GET으로 전달"
+    else:
+        return "POST로 전달"
 
 # @app.route('/upload')
 # def upload_file() :
@@ -89,7 +65,3 @@ if __name__ == '__main__' :
     with app.test_request_context() :
         print(url_for('daum'))
     app.run(debug = True)
-
-
-
-
