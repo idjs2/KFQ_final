@@ -148,7 +148,7 @@ body {
 position: relative;
 margin: 1em 0 0;
 font-family: 'Luckiest Guy', cursive;
-color: #ff3399;
+color: #0080ff;
 z-index: 2;
 }
 
@@ -156,7 +156,7 @@ z-index: 2;
 position: absolute;
 border-radius: 100%;
 bottom: 10px;
-background-color: #ff3399;
+background-color: #0080ff;
 z-index: 1;
 }
 
@@ -7502,6 +7502,8 @@ textarea.form-control-lg {
 
 .mb-4 {
   margin-bottom: 1.5rem !important;
+  font-family: Yeon Sung;
+  font-size: 2rem;
 }
 
 .mb-5 {
