@@ -8,6 +8,10 @@ import os
 def home():
     return render_template("index.html")
 
+@app.route('/daum')
+def daum() :
+    return render_template(url_for('https://www.daum.net'))
+
 @app.route('/method', methods=['GET','POST'])
 def method() :
     if request.method == 'GET':
@@ -18,10 +22,6 @@ def method() :
 # @app.route('/upload')
 # def upload_file() :
 #     return render_template('13_upload.html')
-
-@app.route('/daum')
-def daum() :
-    return render_template(url_for('https://daum.net'))
 
 @app.route('/uploader', methods=['GET', 'POST'])
 def uploader_file() :
