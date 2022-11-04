@@ -32,11 +32,11 @@ def uploader_file() :
         file.save('./static/upload_files/' + secure_filename(file.filename))
     flash("업로드가 완료되었습니다.") 
     IMG_LIST = os.listdir('static/upload_files') # 폴더 속 파일리스트
-    IMG_LIST = ['upload_files/' + i for i in IMG_LIST]
+    imagelist = ['upload_files/' + i for i in IMG_LIST]
     # file_name.append(f.filename) # 파일이름 리스트 추가
     # IMG_LIST = os.listdir('static/upload_files') # 폴더 속 파일리스트
     # IMG_LIST = ['upload_files/' + i for i in IMG_LIST]
-    return render_template('solution.html', file_name = file.filename, imagelist = IMG_LIST)
+    return render_template('solution.html', file_name = file.filename, IMG_LIST = IMG_LIST, imagelist = imagelist)
     # return redirect(url_for('solution'), file_name = file.filename, imagelist = IMG_LIST)
 
 

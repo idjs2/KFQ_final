@@ -515,6 +515,16 @@ progress {
   font-weight: 300;
 }
 
+
+/* 스크롤따라 움직임 */
+
+#aside {
+  position: sticky;
+  top: 130px;
+  right: 300px;
+}
+
+
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
   font-weight: 300;
