@@ -1,0 +1,14 @@
+names:
+- '---'
+- DDL
+- FE
+nc: 3
+roboflow:
+  license: CC BY 4.0
+  project: data-for-yolo-700
+  url: https://universe.roboflow.com/cnn-ylvch/data-for-yolo-700/dataset/4
+  version: 4
+  workspace: cnn-ylvch
+test: /content/dataset/test.txt
+train: /content/dataset/train.txt
+val: /content/dataset/val.txt
